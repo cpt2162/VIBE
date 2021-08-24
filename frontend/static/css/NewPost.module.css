@@ -1,0 +1,81 @@
+.share {
+    position: fixed;
+    bottom: 10px;
+    right: 8px;
+    background-color: #99FFEB;
+    color: white;
+    text-align: center;
+    font-size: 1.5em;
+}
+.form {
+    position: relative;
+    width: 350px;
+    height: 350px;
+    border-right: 2px solid #343a40;
+    border-bottom: 2px solid #343a40;
+    border-left: 2px solid #343a40;
+    background-color: #343a40;
+}
+.inputGroup1 {
+    position: absolute;
+    top: 10%;
+    width: 100%;
+}
+.inputGroup2 {
+    position: absolute;
+    top: 30%;
+    width: 100%;
+}
+.inputGroup3 {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+}
+.inputGroup4 {
+    position: absolute;
+    top: 80%;
+    width: 100%;
+}
+.input {
+    position: static;
+    display: block;
+    width: 97%;
+    margin: auto;
+    border: 3px solid #9933ff;
+    top: 60%;
+
+}
+.inputLabel {
+    position: static;
+    padding-left: 5px;
+    font-family: "Arial";
+    font-size: 1.2em;
+    color: #99FFEB
+}
+.fileinput {
+    padding-left: 5px;
+}
+.header {
+    font-family: "Arial";
+    font-size: 1.5em;
+    text-align: center;
+}
+.postB{
+    font-family: "Arial";
+    font-size: 1.2em;
+    background-color: #99FFEB;
+    border: 2px solid #lalala;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+
+}
+.postB:hover{
+    background-color: #99FFEB;
+    color: white;
+}
+.newpost{
+    text-align: center;
+    color: #99FFEB;
+    font-size: 1.5em;
+}

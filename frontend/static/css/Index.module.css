@@ -1,0 +1,70 @@
+.photo {
+    max-width:100%;
+    max-height:100%;
+    object-fit: contain;
+}
+.caption {
+    text-align: center;
+    font-family: "--bs-font-sans-serif";
+    font-size: 1em;
+    padding: 8px;
+}
+.publishinfo {
+    display: inline-block;
+    float: right;
+    padding-top: 20px;
+    padding-right: 5px;
+    font-family: "--bs-font-sans-serif";
+    font-size: 1em;
+}
+.songtitle {
+    text-align: left;
+    font-family: "--bs-font-sans-serif";
+    font-size: 1.5em;
+    padding-left: 3px;
+}
+.songartist {
+    text-align: left;
+    font-family: "--bs-font-sans-serif";
+    font-size: 1.2em;
+    padding-left: 3px;
+}
+.post{
+    display: block;
+    width: 50%;
+    background: linear-gradient(to bottom right, #a6a6a6 65%, #99FFEB 100%);
+    max-width: 500px;
+    border: 7px solid #99FFEB;
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+body{
+    background-color: #E6E6E6;
+    margin-left: 8px;
+    margin-right: 8px;
+    margin-bottom: 8px;
+}
+hr {
+    border: 2px solid #1a1a1a;
+}
+textarea {
+    max-height: 80px;
+}
+.like{
+    display: inline-block;
+    font-weight: 600;
+    font-size: .875rem;
+    text-transform: uppercase;
+    color: #99FFEB;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 1.3;
+    padding: .75rem 1.5rem;
+    background-color: white;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.like:hover {
+    color: white;
+    background-color: #99FFEB;
+}
