@@ -23,7 +23,8 @@ class Posts extends Component {
         posts: PropTypes.array.isRequired,
         getPosts: PropTypes.func.isRequired,
         deletePost: PropTypes.func.isRequired,
-        likePost: PropTypes.func.isRequired
+        likePost: PropTypes.func.isRequired,
+        auth: PropTypes.object.isRequired
     }
 
     componentDidMount() {
@@ -31,11 +32,15 @@ class Posts extends Component {
     }
 
     onLike = ( post ) => {
-      const { username } = this.state.user;
-      let formData = new FormData();
-      formData.append("user", user);
-      formData.append("post", post );
-      this.props.likePost(formData, post.id, username);
+      const { user } = this.props.auth;
+      const { id } = this.props.auth.user;
+      let postData = new FormData();
+      postData.append("likes", (post.likes + 1));
+      postData.append("liked_users", (post.liked_users + user));
+      let likeData = new FormData();
+      likeData.append("user", id);
+      likeData.append("song", post.id);
+      this.props.likePost(likeData, post.id, postData);
     };
 //    constructor(props) {
 //        super(props);d
@@ -85,7 +90,7 @@ class Posts extends Component {
               <div className={styles.caption}> {post.caption} </div>
               <div className={styles.publishinfo}> Posted on: {post.date_created} </div>
               <button className="btn btn-danger" onClick={this.props.deletePost.bind(this, post.id)}> Delete </button>
-              <button className={styles.like} onClick={this.props.likePost.bind(this, post.id)}> Like </button>
+              <button className={styles.like} onClick={this.onLike.bind(this, post)}> Like </button>
             </div>
             <br />
           </Fragment>
@@ -95,9 +100,13 @@ class Posts extends Component {
       );
     }
 }
-const mapStateToProps = state => ({
-    posts: state.posts.posts
-});
+const mapStateToProps = (state) => {
+    return {
+        posts: state.posts.posts,
+        auth: state.auth
+    }
+}
+
 export default connect(mapStateToProps, { getPosts, deletePost, likePost })(Posts);
 
 //ReactDOM.render(

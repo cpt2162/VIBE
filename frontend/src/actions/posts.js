@@ -42,21 +42,18 @@ export const addPost = post => (dispatch, getState) => {
         }).catch(err => dispatch(returnErrors(err.response.data, err.response.status)));
 };
 //LIKE_POST
-export const likePost = (like, id, username) => (dispatch, getState) => {
+export const likePost = (likeData, id, postData)  => (dispatch, getState) => {
     axios
-        .patch(`./posts/${id}/`, {
-          likes: likes + 1,
-          liked_users: liked_users.add(username)
-        }, tokenConfig(getState))
+        .patch(`./posts/${id}/`, postData, tokenConfig(getState))
         .then(res => {
             dispatch(createMessage({ likePost: "Post Liked"}));
             dispatch({
                 type: LIKE_POST,
-                payload: id
+                payload: res.data
             });
         }).catch(err => console.log(err));
     axios
-        .post("/likes/", like, tokenConfig(getState))
+        .post("/likes/", likeData, tokenConfig(getState))
         .then(res => {
           dispatch({
                 type: LIKE_POST,

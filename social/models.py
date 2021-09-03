@@ -1,4 +1,8 @@
+import datetime
+
 from django.db import models
+from django.utils import timezone
+from django.utils.timezone import now
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import User
 from django.forms import ImageField
@@ -7,7 +11,7 @@ from imagekit.processors import ResizeToFit
 from django.conf import settings
 from vibe import settings
 
-
+#
 # class User(User):
 #     """custom user model."""
 #     name = models.CharField(max_length=32)
@@ -18,8 +22,8 @@ from vibe import settings
 #
 #     def __str__(self):
 #         return self.username
-
 #
+
 
 class Post(models.Model):
     """A photo posted by the user"""
@@ -28,8 +32,8 @@ class Post(models.Model):
     artist = models.CharField(max_length=20, default="*Unknown*")
     caption = models.TextField()
     photo = models.ImageField(upload_to="posts/")
-    likes = models.PositiveIntegerField(default=0)
-    liked_users = models.ManyToManyField(User)
+    queues = models.PositiveIntegerField(default=0, editable=False)
+    liked_users = models.ManyToManyField(User, editable=False)
 
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
@@ -38,6 +42,7 @@ class Post(models.Model):
         return f"{self.title} on {self.date_created}"
 
     def save(self, *args, **kwargs):
+        self.date_created = timezone.now()
         super().save(*args, **kwargs)
 
     class Meta:
@@ -50,17 +55,17 @@ class Like(models.Model):
     """A 'like' on a post"""
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="likes")
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    song = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="likes")
 
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.user} like {self.post.owner}'s post"
+        return f"{self.user} like {self.song.owner}'s post"
 
     class Meta:
         """Metadata"""
 
-        unique_together = (("user", "post"),)
+        unique_together = (("user", "song"),)
         ordering = ["-date_created"]
 
 

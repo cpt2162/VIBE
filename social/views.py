@@ -2,13 +2,13 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from social.models import Post, User
-from social.serializers import UserSerializer, PostSerializer
+from social.models import Post, User, Like
+from social.serializers import UserSerializer, PostSerializer, LikeSerializer
 from rest_framework import permissions, generics, status, viewsets
 from social.permissions import IsOwnerOrReadOnly
 
 
-class UserList(generics.ListCreateAPIView):
+class UserViewSet(viewsets.ModelViewSet):
     """
     Lists all users or create a new user
     """
@@ -94,10 +94,17 @@ class PostViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
+
 class PostDetail(generics.RetrieveUpdateDestroyAPIView):
     """
     Retrieve, update, or delete a photo instance
     """
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+    permission_classes = [permissions.AllowAny]
+
+
+class LikeViewSet(viewsets.ModelViewSet):
+    queryset = Like.objects.all()
+    serializer_class = LikeSerializer
     permission_classes = [permissions.AllowAny]

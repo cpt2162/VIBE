@@ -1,5 +1,9 @@
+from django.utils import timezone
+
 from rest_framework import serializers
-from social.models import User, Post
+
+from accounts.serializers import UserSerializer
+from social.models import User, Post, Like
 
 
 
@@ -52,12 +56,20 @@ class Base64ImageField(serializers.ImageField):
 
         return extension
 
-class UserSerializer(serializers.ModelSerializer):
-    posts = serializers.PrimaryKeyRelatedField(many=True, queryset=Post.objects.all())
+#
+# class UserSerializer(serializers.ModelSerializer):
+#     posts = serializers.PrimaryKeyRelatedField(many=True, queryset=Post.objects.all())
+#     likes = serializers.PrimaryKeyRelatedField(many=True, queryset=Like.objects.all())
+#
+#     class Meta:
+#         model = User
+#         fields = ('username', 'bio', 'posts', 'likes')
+#
 
+class LikeSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
-        fields = ('name', 'bio', 'posts')
+        model = Like
+        fields = ('user', 'song', 'date_created')
 
 
 class PostSerializer(serializers.ModelSerializer):
@@ -71,10 +83,12 @@ class PostSerializer(serializers.ModelSerializer):
     #     request = self.context.get('request', None)
     #     if request:
     #         return request.user
-    date_created = serializers.DateTimeField(format="%d-%m-%Y")
+    # queues = serializers.PrimaryKeyRelatedField(many=True, queryset=Like.objects.all())
+    date_created = serializers.DateTimeField(format="%d-%m-%Y", default=timezone.now())
+    liked_users = UserSerializer(read_only=True, many=True)
 
     class Meta:
         model = Post
-        fields = ('id', 'caption', 'title', 'artist', 'photo', 'likes', 'liked_users', 'date_created', 'date_updated')
+        fields = ('id', 'caption', 'title', 'artist', 'photo', 'queues', 'liked_users', 'date_created', 'date_updated')
 
 
