@@ -56,15 +56,20 @@ textarea {
     font-weight: 600;
     font-size: .875rem;
     text-transform: uppercase;
-    color: #99FFEB;
+    border: 0 solid transparent;
+    color: black;
     text-align: center;
     vertical-align: middle;
-    line-height: 1.3;
-    padding: .75rem 1.5rem;
+    line-height: 1.5;
+    padding: .85rem 1.5rem;
     background-color: white;
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 .like:hover {
-    color: white;
+    color: black;
     background-color: #99FFEB;
+}
+.queues{
+    display: inline-block;
+
 }

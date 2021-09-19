@@ -86,9 +86,10 @@ class PostSerializer(serializers.ModelSerializer):
     # queues = serializers.PrimaryKeyRelatedField(many=True, queryset=Like.objects.all())
     date_created = serializers.DateTimeField(format="%d-%m-%Y", default=timezone.now())
     liked_users = UserSerializer(read_only=True, many=True)
+    # owner = UserSerializer(read_only=True)
 
     class Meta:
         model = Post
-        fields = ('id', 'caption', 'title', 'artist', 'photo', 'queues', 'liked_users', 'date_created', 'date_updated')
+        fields = ('owner', 'id', 'caption', 'title', 'artist', 'photo', 'queues', 'liked_users', 'date_created', 'date_updated')
 
 

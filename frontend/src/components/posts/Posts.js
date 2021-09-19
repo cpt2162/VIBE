@@ -31,16 +31,18 @@ class Posts extends Component {
         this.props.getPosts();
     }
 
+    reRender = () => {
+        this.forceUpdate();
+    };
+
     onLike = ( post ) => {
       const { user } = this.props.auth;
       const { id } = this.props.auth.user;
-      let postData = new FormData();
-      postData.append("likes", (post.likes + 1));
-      postData.append("liked_users", (post.liked_users + user));
+      const postUpdate = { queues: (post.queues + 1), liked_users: user.id};
       let likeData = new FormData();
       likeData.append("user", id);
       likeData.append("song", post.id);
-      this.props.likePost(likeData, post.id, postData);
+      this.props.likePost(likeData, post.id, postUpdate);
     };
 //    constructor(props) {
 //        super(props);d
@@ -88,9 +90,10 @@ class Posts extends Component {
               <div className={styles.songtitle}> Title: {post.title} </div>
               <div className={styles.songartist}> Artist: {post.artist} </div>
               <div className={styles.caption}> {post.caption} </div>
-              <div className={styles.publishinfo}> Posted on: {post.date_created} </div>
+              <div className={styles.publishinfo}> Posted by {post.owner.username} on {post.date_created} </div>
               <button className="btn btn-danger" onClick={this.props.deletePost.bind(this, post.id)}> Delete </button>
-              <button className={styles.like} onClick={this.onLike.bind(this, post)}> Like </button>
+              <button className={styles.like} onClick={this.onLike.bind(this, post)}> Queue </button>
+              <div className={styles.queues}> Queues: {post.queues} </div>
             </div>
             <br />
           </Fragment>

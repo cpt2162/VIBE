@@ -94,6 +94,19 @@ class PostViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
+    def partial_update(self, request, *args, **kwargs):
+        data = request.data
+        instance = self.get_object()
+        if not instance:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        instance.queues = data.get("queues")
+        instance.liked_users.add((data.get("liked_users")))
+        serializer = self.get_serializer(instance, data, partial=True)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 class PostDetail(generics.RetrieveUpdateDestroyAPIView):
     """

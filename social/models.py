@@ -27,13 +27,14 @@ from vibe import settings
 
 class Post(models.Model):
     """A photo posted by the user"""
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts", null=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts",
+                              null=True)
     title = models.CharField(max_length=40, default="*Untitled*")
     artist = models.CharField(max_length=20, default="*Unknown*")
     caption = models.TextField()
     photo = models.ImageField(upload_to="posts/")
-    queues = models.PositiveIntegerField(default=0, editable=False)
-    liked_users = models.ManyToManyField(User, editable=False)
+    queues = models.PositiveIntegerField(default=0)
+    liked_users = models.ManyToManyField(User)
 
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
@@ -54,8 +55,8 @@ class Post(models.Model):
 class Like(models.Model):
     """A 'like' on a post"""
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="likes")
-    song = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="likes")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="queues")
+    song = models.ForeignKey(Post, on_delete=models.CASCADE)
 
     date_created = models.DateTimeField(auto_now_add=True)
 

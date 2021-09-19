@@ -24,6 +24,7 @@ export default function(state = initialState, action) {
        case LIKE_POST:
         return {
             ...state,
+            posts: [...state.posts]
         };
       default:
         return state;

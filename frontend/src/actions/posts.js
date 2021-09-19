@@ -43,8 +43,13 @@ export const addPost = post => (dispatch, getState) => {
 };
 //LIKE_POST
 export const likePost = (likeData, id, postData)  => (dispatch, getState) => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
     axios
-        .patch(`./posts/${id}/`, postData, tokenConfig(getState))
+        .patch(`./posts/${id}/`, postData, tokenConfig(getState), config)
         .then(res => {
             dispatch(createMessage({ likePost: "Post Liked"}));
             dispatch({
@@ -55,9 +60,6 @@ export const likePost = (likeData, id, postData)  => (dispatch, getState) => {
     axios
         .post("/likes/", likeData, tokenConfig(getState))
         .then(res => {
-          dispatch({
-                type: LIKE_POST,
-                payload: res.data
-          });
+          dispatch(getPosts());
         }).catch(err => console.log(err));
 };
