@@ -26,7 +26,10 @@ export const deletePost = (id) => (dispatch, getState) => {
                 type: DELETE_POST,
                 payload: id
             });
-        }).catch(err => console.log(err));
+        }).catch(err => {
+            dispatch(returnErrors("You can only delete your own posts", err.response.status));
+            dispatch(createMessage({ deleteFail: "You can only delete your own posts"}));
+        });
 };
 
 //ADD_POST
@@ -56,10 +59,10 @@ export const likePost = (likeData, id, postData)  => (dispatch, getState) => {
                 type: LIKE_POST,
                 payload: res.data
             });
-        }).catch(err => console.log(err));
+        }).catch(err => dispatch(returnErrors(err.response.data, err.response.status)));
     axios
         .post("/likes/", likeData, tokenConfig(getState))
         .then(res => {
           dispatch(getPosts());
-        }).catch(err => console.log(err));
+        }).catch(err => dispatch(returnErrors(err.response.data, err.response.status)));
 };

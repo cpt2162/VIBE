@@ -22,6 +22,7 @@ export class Alerts extends Component {
             if(message.deletePost) alert.success(message.deletePost);
             if(message.addPost) alert.success(message.addPost);
             if(message.passwordNotMatch) alert.error(message.passwordNotMatch);
+            if(message.deleteFail) alert.error(message.deleteFail);
         }
     }
     render() {
